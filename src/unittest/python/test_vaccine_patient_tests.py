@@ -15,16 +15,16 @@ class TestVaccinePatient(TestCase):
     @freeze_time("2022-03-08")
     def setUp(self):
         """first prepare the stores"""
-        file_store_patient = JSON_FILES_PATH + "store_patient.json"
-        file_store_date = JSON_FILES_PATH + "store_date.son"
+        patient_store = JSON_FILES_PATH + "store_patient.json"
+        appointment_store = JSON_FILES_PATH + "store_date.son"
 
         file_test = JSON_FILES_RF2_PATH + "test_ok.json"
-        if os.path.isfile(file_store_patient):
-            os.remove(file_store_patient)
-        if os.path.isfile(file_store_date):
-            os.remove(file_store_date)
+        if os.path.isfile(patient_store):
+            os.remove(patient_store)
+        if os.path.isfile(appointment_store):
+            os.remove(appointment_store)
 
-        #add patient and date in the store
+        # add patient and date in the store
         my_manager = VaccineManager()
         my_manager.request_vaccination_id("78924cb0-075a-4099-a3ee-f3b562e805b9",
                                           "minombre tienelalongitudmaxima", "Regular",
@@ -42,28 +42,28 @@ class TestVaccinePatient(TestCase):
     def test_vaccine_patient_ok(self):
         """basic path , signature is found , and date = today"""
         my_manager = VaccineManager()
-        value = my_manager.vaccine_patient(
+        signature = my_manager.vaccine_patient(
             "5a06c7bede3d584e934e2f5bd3861e625cb31937f9f1a5362a51fbbf38486f1c")
-        self.assertTrue(value)
+        self.assertTrue(signature)
 
-        file_store_vaccine = JSON_FILES_PATH + "store_vaccine.json"
+        vaccination_store = JSON_FILES_PATH + "store_vaccine.json"
         # check store_vaccine
-        with open(file_store_vaccine, "r", encoding="utf-8", newline="") as file:
-            data_list = json.load(file)
+        with open(vaccination_store, "r", encoding="utf-8", newline="") as file:
+            vaccinations = json.load(file)
         found = False
-        if "5a06c7bede3d584e934e2f5bd3861e625cb31937f9f1a5362a51fbbf38486f1c" in data_list:
+        if "5a06c7bede3d584e934e2f5bd3861e625cb31937f9f1a5362a51fbbf38486f1c" in vaccinations:
             found = True
         self.assertTrue(found)
 
     @freeze_time("2022-04-18")
     def test_vaccine_patient_no_date(self):
         """path signature is found , and date is not today"""
-        file_store_vaccine = JSON_FILES_PATH + "store_vaccine.json"
+        vaccination_store = JSON_FILES_PATH + "store_vaccine.json"
         my_manager = VaccineManager()
 
         # read the file  to compare
-        if os.path.isfile(file_store_vaccine):
-            with open(file_store_vaccine, "r", encoding="utf-8", newline="") as file:
+        if os.path.isfile(vaccination_store):
+            with open(vaccination_store, "r", encoding="utf-8", newline="") as file:
                 hash_original = hashlib.md5(file.__str__().encode()).hexdigest()
         else:
             hash_original = ""
@@ -74,8 +74,8 @@ class TestVaccinePatient(TestCase):
         self.assertEqual(context_manager.exception.message, "Today is not the date")
 
         # read the file again to compare
-        if os.path.isfile(file_store_vaccine):
-            with open(file_store_vaccine, "r", encoding="utf-8", newline="") as file:
+        if os.path.isfile(vaccination_store):
+            with open(vaccination_store, "r", encoding="utf-8", newline="") as file:
                 hash_new = hashlib.md5(file.__str__().encode()).hexdigest()
         else:
             hash_new = ""
@@ -85,12 +85,12 @@ class TestVaccinePatient(TestCase):
     @freeze_time("2022-03-18")
     def test_vaccine_patient_bad_date_signature(self):
         """path signature is not valid format , only 63 chars"""
-        file_store_vaccine = JSON_FILES_PATH + "store_vaccine.json"
+        vaccination_store = JSON_FILES_PATH + "store_vaccine.json"
         my_manager = VaccineManager()
         # read the file  to compare
 
-        if os.path.isfile(file_store_vaccine):
-            with open(file_store_vaccine, "r", encoding="utf-8", newline="") as file:
+        if os.path.isfile(vaccination_store):
+            with open(vaccination_store, "r", encoding="utf-8", newline="") as file:
                 hash_original = hashlib.md5(file.__str__().encode()).hexdigest()
         else:
             hash_original = ""
@@ -101,8 +101,8 @@ class TestVaccinePatient(TestCase):
         self.assertEqual(context_manager.exception.message, "date_signature format is not valid")
 
         # read the file again to compare
-        if os.path.isfile(file_store_vaccine):
-            with open(file_store_vaccine, "r", encoding="utf-8", newline="") as file:
+        if os.path.isfile(vaccination_store):
+            with open(vaccination_store, "r", encoding="utf-8", newline="") as file:
                 hash_new = hashlib.md5(file.__str__().encode()).hexdigest()
         else:
             hash_new = ""
@@ -112,12 +112,12 @@ class TestVaccinePatient(TestCase):
     @freeze_time("2022-03-18")
     def test_vaccine_patient_not_found_date_signature(self):
         """path: signature is not found in store_date"""
-        file_store_vaccine = JSON_FILES_PATH + "store_vaccine.json"
+        vaccination_store = JSON_FILES_PATH + "store_vaccine.json"
         my_manager = VaccineManager()
         # read the file  to compare
 
-        if os.path.isfile(file_store_vaccine):
-            with open(file_store_vaccine, "r", encoding="utf-8", newline="") as file:
+        if os.path.isfile(vaccination_store):
+            with open(vaccination_store, "r", encoding="utf-8", newline="") as file:
                 hash_original = hashlib.md5(file.__str__().encode()).hexdigest()
         else:
             hash_original = ""
@@ -128,8 +128,8 @@ class TestVaccinePatient(TestCase):
         self.assertEqual(context_manager.exception.message, "date_signature is not found")
 
         # read the file again to compare
-        if os.path.isfile(file_store_vaccine):
-            with open(file_store_vaccine, "r", encoding="utf-8", newline="") as file:
+        if os.path.isfile(vaccination_store):
+            with open(vaccination_store, "r", encoding="utf-8", newline="") as file:
                 hash_new = hashlib.md5(file.__str__().encode()).hexdigest()
         else:
             hash_new = ""
@@ -139,9 +139,9 @@ class TestVaccinePatient(TestCase):
     @freeze_time("2022-03-18")
     def test_vaccine_patient_no_store_date(self):
         """path: store_date is not found, so remove store_date.json"""
-        file_store_date = JSON_FILES_PATH + "store_date.json"
-        if os.path.isfile(file_store_date):
-            os.remove(file_store_date)
+        appointment_store = JSON_FILES_PATH + "store_date.json"
+        if os.path.isfile(appointment_store):
+            os.remove(appointment_store)
 
         my_manager = VaccineManager()
         with self.assertRaises(VaccineManagementException) as context_manager:
@@ -152,11 +152,11 @@ class TestVaccinePatient(TestCase):
     @freeze_time("2022-03-18")
     def test_vaccine_patient_store_date_is_empty(self):
         """for testing: store_date is empty"""
-        #write a store_date empty
-        file_store_date = JSON_FILES_PATH + "store_date.json"
-        data_list=[]
-        with open(file_store_date, "w", encoding="utf-8", newline="") as file:
-            json.dump(data_list, file, indent=2)
+        # write a store_date empty
+        appointment_store = JSON_FILES_PATH + "store_date.json"
+        vaccinations = []
+        with open(appointment_store, "w", encoding="utf-8", newline="") as file:
+            json.dump(vaccinations, file, indent=2)
 
         my_manager = VaccineManager()
         with self.assertRaises(VaccineManagementException) as context_manager:

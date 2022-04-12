@@ -3,9 +3,10 @@ import hashlib
 import json
 from datetime import datetime
 
+
 class VaccinePatientRegister:
     """Class representing the register of the patient in the system"""
-    #pylint: disable=too-many-arguments
+    # pylint: disable = too-many-arguments
     def __init__( self, patient_id, full_name, registration_type, phone_number, age ):
         self.__patient_id = patient_id
         self.__full_name = full_name
@@ -14,7 +15,7 @@ class VaccinePatientRegister:
         self.__age = age
         justnow = datetime.utcnow()
         self.__time_stamp = datetime.timestamp(justnow)
-        #self.__time_stamp = 1645542405.232003
+        # self.__time_stamp = 1645542405.232003
         self.__patient_sys_id =  hashlib.md5(self.__str__().encode()).hexdigest()
 
     def __str__(self):
@@ -34,6 +35,7 @@ class VaccinePatientRegister:
     def vaccine_type( self ):
         """Property representing the type vaccine"""
         return self.__registration_type
+
     @vaccine_type.setter
     def vaccine_type( self, value ):
         self.__registration_type = value
@@ -42,6 +44,7 @@ class VaccinePatientRegister:
     def phone_number( self ):
         """Property representing the requester's phone number"""
         return self.__phone_number
+
     @phone_number.setter
     def phone_number( self, value ):
         self.__phone_number = value
@@ -50,6 +53,7 @@ class VaccinePatientRegister:
     def patient_id( self ):
         """Property representing the requester's UUID"""
         return self.__patient_id
+
     @patient_id.setter
     def patient_id( self, value ):
         self.__patient_id = value
