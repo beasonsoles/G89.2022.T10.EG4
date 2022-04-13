@@ -1,13 +1,15 @@
 """Contains the class Vaccination Appointment"""
-from datetime import datetime
 import hashlib
+import re
+from datetime import datetime
+from .vaccine_management_exception import VaccineManagementException
 
 
 # pylint: disable=too-many-instance-attributes
-class VaccinationAppoinment():
+class VaccinationAppoinment:
     """Class representing an appointment  for the vaccination of a patient"""
 
-    def __init__( self, guid, patient_sys_id, patient_phone_number, days ):
+    def __init__(self, guid, patient_sys_id, patient_phone_number, days):
         self.__alg = "SHA-256"
         self.__type = "DS"
         self.__patient_id = guid
@@ -29,13 +31,21 @@ class VaccinationAppoinment():
                self.__patient_sys_id + ",issuedate:" + self.__issued_at.__str__() + \
                ",vaccinationtiondate:" + self.__appoinment_date.__str__() + "}"
 
+    @staticmethod
+    def validate_date_signature(signature):
+        """Method for validating sha256 values"""
+        myregex = re.compile(r"[0-9a-fA-F]{64}$")
+        result = myregex.fullmatch(signature)
+        if not result:
+            raise VaccineManagementException("date_signature format is not valid")
+
     @property
-    def patient_id( self ):
+    def patient_id(self):
         """Property that represents the guid of the patient"""
         return self.__patient_id
 
     @patient_id.setter
-    def patient_id( self, value ):
+    def patient_id(self, value):
         self.__patient_id = value
 
     @property
@@ -48,16 +58,16 @@ class VaccinationAppoinment():
         self.__patient_sys_id = value
 
     @property
-    def phone_number( self ):
+    def phone_number(self):
         """Property that represents the phone number of the patient"""
         return self.__phone_number
 
     @phone_number.setter
-    def phone_number( self, value ):
+    def phone_number(self, value):
         self.__phone_number = value
 
     @property
-    def vaccination_signature( self ):
+    def vaccination_signature(self):
         """Returns the sha256 signature of the date"""
         return hashlib.sha256(self.__signature_string().encode()).hexdigest()
 
@@ -67,11 +77,11 @@ class VaccinationAppoinment():
         return self.__issued_at
 
     @issued_at.setter
-    def issued_at( self, value ):
+    def issued_at(self, value):
         self.__issued_at = value
 
     @property
-    def appoinment_date( self ):
+    def appoinment_date(self):
         """Returns the vaccination date"""
         return self.__appoinment_date
 
