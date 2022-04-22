@@ -84,7 +84,7 @@ class TestVaccinePatient(TestCase):
 
     @freeze_time("2022-03-18")
     def test_vaccine_patient_bad_date_signature(self):
-        """path signature is not valid format , only 63 chars"""
+        """path signature is not valid format , only 63 characters"""
         vaccination_store = JSON_FILES_PATH + "store_vaccine.json"
         my_manager = VaccineManager()
         # read the file  to compare
