@@ -189,6 +189,12 @@ class TestGetVaccineDate(TestCase):
         with self.assertRaises(VaccineManagementException) as exception:
             my_manager.get_vaccine_date(file_test)
 
+        error_message = "Exception not raised"
+        try:
+            my_manager.get_vaccine_date(file_test)
+        except Exception as exception_raised:
+            error_message = exception_raised.__str__()
+
         # restore the original patient's store
         os.rename(patient_store, JSON_FILES_PATH + "store_patient_manipulated.json")
         if os.path.isfile(JSON_FILES_PATH + "swap.json"):
@@ -202,5 +208,5 @@ class TestGetVaccineDate(TestCase):
         else:
             hash_new = ""
 
-        self.assertEqual(exception.exception.message, "Patient's data have been manipulated")
+        self.assertEqual(error_message, "Patient's data have been manipulated")
         self.assertEqual(hash_new, hash_original)

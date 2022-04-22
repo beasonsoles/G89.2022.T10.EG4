@@ -161,7 +161,7 @@ class TestRequestVacID(unittest.TestCase):
             md5 = my_request.request_vaccination_id("a729d963-e0dd-47d0-8bc6-b6c595ad0098",
                                                     "Pedro Perez", "Regular", "+34333456789", "124")
         self.assertEqual(context_manager.exception.message,
-                         "patien_id is registered in store_patient")
+                         "patient_id is registered in store_patient")
 
         with open(patient_store, "r", encoding="utf-8", newline="") as file:
             data_list = json.load(file)

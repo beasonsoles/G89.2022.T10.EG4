@@ -1,8 +1,10 @@
 """Contains the class Vaccination Appointment"""
 import hashlib
+import json
 import re
 from datetime import datetime
-from .vaccine_management_exception import VaccineManagementException
+from uc3m_care.vaccine_management_exception import VaccineManagementException
+from uc3m_care.vaccine_manager_config import JSON_FILES_PATH
 
 
 # pylint: disable=too-many-instance-attributes
@@ -13,8 +15,8 @@ class VaccinationAppoinment:
         self.__alg = "SHA-256"
         self.__type = "DS"
         self.__patient_id = guid
-        self.__patient_sys_id = patient_sys_id
-        self.__phone_number = patient_phone_number
+        self.__patient_sys_id = self.validate_system_id(patient_sys_id)
+        self.__phone_number = self.validate_phone_number(patient_phone_number)
         justnow = datetime.utcnow()
         self.__issued_at = datetime.timestamp(justnow)
         if days == 0:
@@ -38,6 +40,45 @@ class VaccinationAppoinment:
         result = myregex.fullmatch(signature)
         if not result:
             raise VaccineManagementException("date_signature format is not valid")
+
+    @staticmethod
+    def validate_system_id(system_id):
+        myregex = re.compile(r"[0-9a-fA-F]{32}$")
+        result = myregex.fullmatch(system_id)
+        if not result:
+            raise VaccineManagementException("patient system id is not valid")
+        return system_id
+
+    @staticmethod
+    def validate_phone_number(phone_number):
+        myregex = re.compile(r"^(\+)[0-9]{11}")
+        result = myregex.fullmatch(phone_number)
+        if not result:
+            raise VaccineManagementException("phone number is not valid")
+        return phone_number
+
+    @staticmethod
+    def save_appointment(signature):
+        """Saves the appointment into a file"""
+        appointment_store = JSON_FILES_PATH + "store_date.json"
+        # first read the file
+        try:
+            with open(appointment_store, "r", encoding="utf-8", newline="") as file:
+                appointments = json.load(file)
+        except FileNotFoundError:
+            # file is not found , so  init my data_list
+            appointments = []
+        except json.JSONDecodeError as exception:
+            raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from exception
+
+        # append the date
+        appointments.append(signature.__dict__)
+
+        try:
+            with open(appointment_store, "w", encoding="utf-8", newline="") as file:
+                json.dump(appointments, file, indent=2)
+        except FileNotFoundError as exception:
+            raise VaccineManagementException("Wrong file or file path") from exception
 
     @property
     def patient_id(self):
