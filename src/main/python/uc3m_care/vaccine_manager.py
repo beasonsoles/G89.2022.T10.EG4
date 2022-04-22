@@ -90,21 +90,21 @@ class VaccineManager:
             raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from exception
         except FileNotFoundError as exception:
             raise VaccineManagementException("Store_date not found") from exception
-        my_appointment = VaccinationAppoinment(
-                                    appointments["_VaccinationAppoinment__patient_id"],
-                                    appointments["_VaccinationAppoinment__patient_sys_id"],
-                                    appointments["_VaccinationAppoinment__phone_number"],
-                                    appointments["_VaccinationAppoinment__appoinment_date"])
-        my_appointment.validate_date_signature(date_signature)
-        # search this date_signature
         found = False
         for appointment in appointments:
             if appointment["_VaccinationAppoinment__date_signature"] == date_signature:
                 found = True
                 date_time = appointment["_VaccinationAppoinment__appoinment_date"]
+                my_appointment = VaccinationAppoinment(
+                    appointments["_VaccinationAppoinment__patient_id"],
+                    appointments["_VaccinationAppoinment__patient_sys_id"],
+                    appointments["_VaccinationAppoinment__phone_number"],
+                    appointments["_VaccinationAppoinment__appoinment_date"])
+                my_appointment.validate_date_signature(date_signature)
         if not found:
             raise VaccineManagementException("date_signature is not found")
 
+        # search this date_signature
         today = datetime.today().date()
         date_patient = datetime.fromtimestamp(date_time).date()
         if date_patient != today:

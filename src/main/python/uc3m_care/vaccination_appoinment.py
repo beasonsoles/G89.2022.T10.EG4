@@ -40,6 +40,7 @@ class VaccinationAppoinment:
         result = myregex.fullmatch(signature)
         if not result:
             raise VaccineManagementException("date_signature format is not valid")
+        return signature
 
     @staticmethod
     def validate_system_id(system_id):

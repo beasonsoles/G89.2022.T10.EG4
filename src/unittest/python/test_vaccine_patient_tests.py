@@ -33,7 +33,7 @@ class TestVaccinePatient(TestCase):
 
         my_manager.request_vaccination_id("57c811e5-3f5a-4a89-bbb8-11c0464d53e6",
                                           "minombre tieneuncharmenosqmax", "Family",
-                                          "+34333456789","7")
+                                          "+34333456789", "7")
         file_test = JSON_FILES_RF2_PATH + "test_ok_2.json"
 
         my_manager.get_vaccine_date(file_test)
