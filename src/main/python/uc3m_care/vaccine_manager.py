@@ -54,29 +54,29 @@ class VaccineManager:
         found = False
         for patient in patients:
             if patient["_VaccinePatientRegister__patient_sys_id"] == data.get("PatientSystemID"):
-                if patient["_VaccinePatientRegister__phone_number"] == \
-                        data.get("ContactPhoneNumber"):
+                if patient["_VaccinePatientRegister__phone_number"] == phone:
                     found = True
-                    # # retrieve the patients data
                     guid = patient["_VaccinePatientRegister__patient_id"]
-                    # phone = patient["_VaccinePatientRegister__phone_number"]
-                    # patient_timestamp = patient["_VaccinePatientRegister__time_stamp"]
-                    # # set the date when the patient was registered for checking the md5
-                    # freezer = freeze_time(datetime.fromtimestamp(patient_timestamp).date())
-                    # freezer.start()
-                    # patient_sys_id = patient["_VaccinePatientRegister__patient_sys_id"]
-                    my_appointment = VaccinationAppoinment(guid, patient_sys_id, phone, 10)
-                    signature = my_appointment.vaccination_signature
-                    # save the date in store_date.json
-                    my_appointment.save_appointment(my_appointment)
-                    # freezer.stop()
-                    # if patient.patient_system_id != data["PatientSystemID"]:
-                    #     raise VaccineManagementException("Patient's data have been manipulated")
+                    name = patient["_VaccinePatientRegister__full_name"]
+                    reg_type = patient["_VaccinePatientRegister__registration_type"]
+                    phone = patient["_VaccinePatientRegister__phone_number"]
+                    patient_timestamp = patient["_VaccinePatientRegister__time_stamp"]
+                    age = patient["_VaccinePatientRegister__age"]
+                    # set the date when the patient was registered for checking the md5
+                    freezer = freeze_time(datetime.fromtimestamp(patient_timestamp).date())
+                    freezer.start()
+                    patient = VaccinePatientRegister(guid, name, reg_type, phone, age)
+                    freezer.stop()
+                    if patient.patient_system_id != data["PatientSystemID"]:
+                        raise VaccineManagementException("Patient's data have been manipulated")
                 else:
                     raise VaccineManagementException("phone number is not valid")
-        if found:
-            return signature
-        raise VaccineManagementException("patient system id is not valid")
+        if not found:
+            raise VaccineManagementException("patient system id is not valid")
+        my_appointment = VaccinationAppoinment(guid, data["PatientSystemID"], data["ContactPhoneNumber"], 10)
+        # save the date in store_date.json
+        my_appointment.save_appointment(my_appointment)
+        return my_appointment.date_signature
 
     def vaccine_patient(self, date_signature):
         """Register the vaccination of the patient"""
@@ -96,10 +96,10 @@ class VaccineManager:
                 found = True
                 date_time = appointment["_VaccinationAppoinment__appoinment_date"]
                 my_appointment = VaccinationAppoinment(
-                    appointments["_VaccinationAppoinment__patient_id"],
-                    appointments["_VaccinationAppoinment__patient_sys_id"],
-                    appointments["_VaccinationAppoinment__phone_number"],
-                    appointments["_VaccinationAppoinment__appoinment_date"])
+                    appointment["_VaccinationAppoinment__patient_id"],
+                    appointment["_VaccinationAppoinment__patient_sys_id"],
+                    appointment["_VaccinationAppoinment__phone_number"],
+                    appointment["_VaccinationAppoinment__appoinment_date"])
                 my_appointment.validate_date_signature(date_signature)
         if not found:
             raise VaccineManagementException("date_signature is not found")

@@ -82,6 +82,17 @@ class TestGetVaccineDate(TestCase):
         """tests no ok"""
         appointment_store = JSON_FILES_PATH + "store_date.json"
         my_manager = VaccineManager()
+        # first, prepare my test, remove store patient
+        patient_store = JSON_FILES_PATH + "store_patient.json"
+        appointment_store = JSON_FILES_PATH + "store_date.json"
+        if os.path.isfile(patient_store):
+            os.remove(patient_store)
+        if os.path.isfile(appointment_store):
+            os.remove(appointment_store)
+        # add a patient in the store
+        my_manager.request_vaccination_id("78924cb0-075a-4099-a3ee-f3b562e805b9",
+                                          "minombre tienelalongitudmaxima",
+                                          "Regular", "+34123456789", "6")
         for file_name, expected_value in param_list_nok:
             with self.subTest(test=file_name):
                 file_test = JSON_FILES_RF2_PATH + file_name
@@ -186,8 +197,8 @@ class TestGetVaccineDate(TestCase):
             hash_original = ""
 
         # check the method
-        with self.assertRaises(VaccineManagementException) as exception:
-            my_manager.get_vaccine_date(file_test)
+        #with self.assertRaises(VaccineManagementException) as exception:
+        #    my_manager.get_vaccine_date(file_test)
 
         error_message = "Exception not raised"
         try:
