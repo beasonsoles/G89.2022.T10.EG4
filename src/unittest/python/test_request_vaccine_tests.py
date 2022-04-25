@@ -55,7 +55,7 @@ param_list_nok = [("bb5dbd6f-d8b4-113f-8eb9-dd262cfc54e0",
                    "test_8 , patiend id 36 long"),
                   ("6071d52e-ab42-452d-837c-0639367db79f",
                    "minombre tienelalongitudmaxima",
-                   "Regularcito", "+34123456789", "6", "Registration type is nor valid",
+                   "Regularcito", "+34123456789", "6", "Registration type is not valid",
                    "test_9 registration type not valid"),
                   ("6071d52e-ab42-452d-837c-0639367db79f",
                    "minombre tieneun01", "Family",
@@ -241,7 +241,7 @@ class TestRequestVacID(unittest.TestCase):
             my_request.request_vaccination_id("bb5dbd6f-d8b4-413f-8eb9-dd262cfc54e0",
                                               "Pedro Hernandez", "Regularito",
                                               "+34123456789", "22")
-        self.assertEqual("Registration type is nor valid", context_manager.exception.message)
+        self.assertEqual("Registration type is not valid", context_manager.exception.message)
 
 
 if __name__ == '__main__':
