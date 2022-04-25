@@ -6,15 +6,17 @@ import uuid
 from datetime import datetime
 from uc3m_care.vaccine_management_exception import VaccineManagementException
 from uc3m_care.vaccine_manager_config import JSON_FILES_PATH
+from .data.attribute.attribute_registration_type import RegistrationType
+from .data.attribute.attribute_registration_type import PatientID
 
 
 class VaccinePatientRegister:
     """Class representing the register of the patient in the system"""
     # pylint: disable = too-many-arguments
     def __init__(self, patient_id, full_name, registration_type, phone_number, age):
-        self.__patient_id = self.validate_guid(patient_id)
+        self.__patient_id = PatientID(patient_id).value
         self.__full_name = self.validate_full_name(full_name)
-        self.__registration_type = self.validate_registration_type(registration_type)
+        self.__registration_type = RegistrationType(registration_type).value
         self.__phone_number = self.validate_phone_number(phone_number)
         self.__age = self.validate_age(age)
         justnow = datetime.utcnow()
