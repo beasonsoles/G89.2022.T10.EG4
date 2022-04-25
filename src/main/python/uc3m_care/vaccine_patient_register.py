@@ -1,9 +1,8 @@
 """MODULE: access_request. Contains the access request class"""
 import hashlib
 import json
-import re
-import uuid
 from datetime import datetime
+from freezegun import freeze_time
 from uc3m_care.vaccine_management_exception import VaccineManagementException
 from uc3m_care.vaccine_manager_config import JSON_FILES_PATH
 from .data.attribute.attribute_age import Age
@@ -27,11 +26,36 @@ class VaccinePatientRegister:
         # self.__time_stamp = 1645542405.232003
         self.__patient_sys_id = hashlib.md5(self.__str__().encode()).hexdigest()
 
+    @classmethod
+    def create_patient_from_patient_system_id(cls, patient_system_id):
+        patient_store = JSON_FILES_PATH + "store_patient.json"
+        with open(patient_store, "r", encoding="utf-8", newline="") as file:
+            patients = json.load(file)
+        found = False
+        for pat in patients:
+            if pat["_VaccinePatientRegister__patient_sys_id"] == patient_system_id:
+                found = True
+                guid = pat["_VaccinePatientRegister__patient_id"]
+                name = pat["_VaccinePatientRegister__full_name"]
+                reg_type = pat["_VaccinePatientRegister__registration_type"]
+                phone = pat["_VaccinePatientRegister__phone_number"]
+                age = pat["_VaccinePatientRegister__age"]
+                patient_timestamp = pat["_VaccinePatientRegister__time_stamp"]
+                # set the date when the patient was registered for checking the md5
+                freezer = freeze_time(datetime.fromtimestamp(patient_timestamp).date())
+                freezer.start()
+                patient = cls(guid, name, reg_type, phone, age)
+                freezer.stop()
+                if patient.patient_system_id != patient_system_id:
+                    raise VaccineManagementException("Patient's data have been manipulated")
+        if not found:
+            raise VaccineManagementException("patient_system_id not found")
+        return patient
+
     def __str__(self):
         return "VaccinePatientRegister:" + json.dumps(self.__dict__)
 
-    @staticmethod
-    def register_patient(data):
+    def register_patient(self):
         """Method for saving the patients store"""
         patient_store = JSON_FILES_PATH + "store_patient.json"
         # first read the file
@@ -51,7 +75,7 @@ class VaccinePatientRegister:
                     patient["_VaccinePatientRegister__full_name"] == data.full_name:
                 found = True
         if found is False:
-            patients.append(data.__dict__)
+            patients.append(self.__dict__)
             try:
                 with open(patient_store, "w", encoding="utf-8", newline="") as file:
                     json.dump(patients, file, indent=2)
