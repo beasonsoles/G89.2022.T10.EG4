@@ -3,7 +3,7 @@ import re
 from uc3m_care.vaccine_management_exception import VaccineManagementException
 
 
-class Attribute():
+class Attribute:
     """Attribute pattern class"""
     _validation_pattern = r""
     _validation_error_message = ""

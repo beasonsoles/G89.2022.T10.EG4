@@ -8,6 +8,7 @@ from uc3m_care import VaccineManager
 from uc3m_care import VaccineManagementException
 from uc3m_care import JSON_FILES_PATH
 from uc3m_care import JSON_FILES_RF2_PATH
+from uc3m_care.storage.vaccination_json_store import VaccinationJsonStore
 
 
 class TestVaccinePatient(TestCase):
@@ -45,15 +46,10 @@ class TestVaccinePatient(TestCase):
         signature = my_manager.vaccine_patient(
             "5a06c7bede3d584e934e2f5bd3861e625cb31937f9f1a5362a51fbbf38486f1c")
         self.assertTrue(signature)
-
-        vaccination_store = JSON_FILES_PATH + "store_vaccine.json"
-        # check store_vaccine
-        with open(vaccination_store, "r", encoding="utf-8", newline="") as file:
-            vaccinations = json.load(file)
-        found = False
-        if "5a06c7bede3d584e934e2f5bd3861e625cb31937f9f1a5362a51fbbf38486f1c" in vaccinations:
-            found = True
-        self.assertTrue(found)
+        vaccination_log = VaccinationJsonStore()
+        vaccination_entry = vaccination_log.find_item("5a06c7bede3d584e934e2f5bd3861e625cb"
+                                                      "31937f9f1a5362a51fbbf38486f1c")
+        self.assertIsNotNone(vaccination_entry)
 
     @freeze_time("2022-04-18")
     def test_vaccine_patient_no_date(self):

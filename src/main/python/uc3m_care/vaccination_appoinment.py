@@ -20,7 +20,8 @@ class VaccinationAppoinment:
         self.__alg = "SHA-256"
         self.__type = "DS"
         self.__patient_sys_id = PatientSystemID(patient_sys_id).value
-        patient = VaccinePatientRegister.create_patient_from_patient_system_id(self.__patient_sys_id)
+        patient = VaccinePatientRegister.create_patient_from_patient_system_id(
+            self.__patient_sys_id)
         self.__patient_id = patient.patient_id
         self.__phone_number = PhoneNumber(patient_phone_number).value
         justnow = datetime.utcnow()
@@ -39,15 +40,6 @@ class VaccinationAppoinment:
                self.__patient_sys_id + ",issuedate:" + self.__issued_at.__str__() + \
                ",vaccinationtiondate:" + self.__appoinment_date.__str__() + "}"
 
-    @staticmethod
-    def validate_date_signature(signature):
-        """Method for validating sha256 values"""
-        myregex = re.compile(r"[0-9a-fA-F]{64}$")
-        result = myregex.fullmatch(signature)
-        if not result:
-            raise VaccineManagementException("date_signature format is not valid")
-        return signature
-
     def save_appointment(self):
         """Saves the appointment into a file"""
         appointments_store = AppointmentsStore()
@@ -60,6 +52,33 @@ class VaccinationAppoinment:
         if appointment_record is None:
             raise VaccineManagementException("date_signature is not found")
         freezer = freeze_time(datetime.fromtimestamp(appointment_record['_VaccinationAppoinment__issued_at']))
+        freezer.start()
+        appointment = cls(appointment_record['_VaccinationAppoinment__patient_system_id'],
+                          appointment_record['_VaccinationAppoinment__phone_number'], 10)
+        freezer.stop()
+        return appointment
+
+    def is_valid_today(self):
+        today = datetime.today().date()
+        date_patient = datetime.fromtimestamp(self.appoinment_date).date()
+        if date_patient != today:
+            raise VaccineManagementException("Today is not the date")
+        return True
+
+    def register_vaccination(self):
+        if self.is_valid_today():
+            vaccination_entry = VaccinationLog(self.date_signature)
+            vaccination_entry.save_log_entry()
+        return True
+
+    @classmethod
+    def get_appointment_from_date_signature(cls, date_signature):
+        appointments_store = AppointmentsStore()
+        appointment_record = appointments_store.find_item(date_signature)
+        if appointment_record is None:
+            raise VaccineManagementException("date_signature is not found")
+        freezer = freeze_time(datetime.fromtimestamp(
+            appointment_record['_VaccinationAppoinment__issued_at']))
         freezer.start()
         appointment = cls(appointment_record['_VaccinationAppoinment__patient_system_id'],
                           appointment_record['_VaccinationAppoinment__phone_number'], 10)
