@@ -56,8 +56,8 @@ class TestGetVaccineDate(TestCase):
         appointment_store = JSON_FILES_PATH + "store_date.json"
         if os.path.isfile(patient_store):
             os.remove(patient_store)
-        if os.path.isfile(appointment_store):
-            os.remove(appointment_store)
+        # if os.path.isfile(appointment_store):
+        #     os.remove(appointment_store)
         # add a patient in the store
         my_manager.request_vaccination_id("78924cb0-075a-4099-a3ee-f3b562e805b9",
                                           "minombre tienelalongitudmaxima",
@@ -72,7 +72,7 @@ class TestGetVaccineDate(TestCase):
             appointments = json.load(file)
         found = False
         for appointment in appointments:
-            if appointment["_VaccinationAppoinment__patient_sys_id"] == \
+            if appointment["_VaccinationAppointment__patient_sys_id"] == \
                     "72b72255619afeed8bd26861a2bc2caf":
                 found = True
         self.assertTrue(found)
@@ -188,7 +188,7 @@ class TestGetVaccineDate(TestCase):
         if not os.path.isfile(JSON_FILES_PATH + "store_patient_manipulated.json"):
             shutil.copy(JSON_FILES_RF2_PATH + "store_patient_manipulated.json",
                         JSON_FILES_PATH + "store_patient_manipulated.json")
-        #rename the manipulated patient's store
+        # rename the manipulated patient's store
         if os.path.isfile(file_store):
             print(file_store)
             print(JSON_FILES_PATH + "swap.json")
@@ -202,23 +202,22 @@ class TestGetVaccineDate(TestCase):
         else:
             hash_original = ""
         # check the method
-        #with self.assertRaises(VaccineManagementException) as c_m:
+        # with self.assertRaises(VaccineManagementException) as c_m:
         #   my_manager.get_vaccine_date(file_test)
-
         try:
             my_manager.get_vaccine_date(file_test)
             exception_message = "Exception not raised"
         except Exception as exception_raised:
             exception_message = exception_raised.__str__()
 
-        #restore the original patient's store
+        # restore the original patient's store
         os.rename(file_store, JSON_FILES_PATH + "store_patient_manipulated.json")
         if os.path.isfile(JSON_FILES_PATH + "swap.json"):
             print(JSON_FILES_PATH + "swap.json")
             print(file_store)
             os.rename(JSON_FILES_PATH + "swap.json", file_store)
 
-        # read the file again to campare
+        # read the file again to compare
         if os.path.isfile(file_store_date):
             with open(file_store_date, "r", encoding="utf-8", newline="") as file:
                 hash_new = hashlib.md5(file.__str__().encode()).hexdigest()

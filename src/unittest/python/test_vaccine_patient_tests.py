@@ -22,8 +22,8 @@ class TestVaccinePatient(TestCase):
         file_test = JSON_FILES_RF2_PATH + "test_ok.json"
         if os.path.isfile(patient_store):
             os.remove(patient_store)
-        #if os.path.isfile(appointment_store):
-        #    os.remove(appointment_store)
+        # if os.path.isfile(appointment_store):
+        #     os.remove(appointment_store)
 
         # add patient and date in the store
         my_manager = VaccineManager()
@@ -143,7 +143,7 @@ class TestVaccinePatient(TestCase):
         with self.assertRaises(VaccineManagementException) as context_manager:
             my_manager.vaccine_patient(
                 "5a06c7bede3d584e934e2f5bd3861e625cb31937f9f1a5362a51fbbf38486f1c")
-        self.assertEqual(context_manager.exception.message, "Store_date not found")
+        self.assertEqual(context_manager.exception.message, "Store_date not found") # shouldn't it be "date_signature is not found"?
 
     @freeze_time("2022-03-18")
     def test_vaccine_patient_store_date_is_empty(self):

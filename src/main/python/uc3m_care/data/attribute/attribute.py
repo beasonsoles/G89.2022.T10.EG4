@@ -1,6 +1,6 @@
 """Module for the attribute class pattern"""
 import re
-from uc3m_care.vaccine_management_exception import VaccineManagementException
+from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
 
 
 class Attribute:

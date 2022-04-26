@@ -3,8 +3,8 @@ import hashlib
 import json
 from datetime import datetime
 from freezegun import freeze_time
-from uc3m_care.vaccine_management_exception import VaccineManagementException
-from uc3m_care.vaccine_manager_config import JSON_FILES_PATH
+from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
+from uc3m_care.cfg.vaccine_manager_config import JSON_FILES_PATH
 from uc3m_care.data.attribute.attribute_age import Age
 from uc3m_care.data.attribute.attribute_full_name import FullName
 from uc3m_care.data.attribute.attribute_patient_id import PatientID

@@ -2,16 +2,18 @@
 import hashlib
 from datetime import datetime
 from freezegun import freeze_time
+from uc3m_care.data.attribute.attribute_date_signature import DateSignature
 from uc3m_care.data.vaccination_log import VaccinationLog
-from uc3m_care.vaccine_management_exception import VaccineManagementException
+from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
 from uc3m_care.data.vaccine_patient_register import VaccinePatientRegister
 from uc3m_care.data.attribute.attribute_patient_system_id import PatientSystemID
 from uc3m_care.data.attribute.attribute_phone_number import PhoneNumber
 from uc3m_care.storage.appointments_store import AppointmentsStore
 from uc3m_care.parser.appointment_json_parser import AppointmentJsonParser
 
+
 # pylint: disable=too-many-instance-attributes
-class VaccinationAppoinment:
+class VaccinationAppointment:
     """Class representing an appointment  for the vaccination of a patient"""
 
     def __init__(self, patient_sys_id, patient_phone_number, days):
@@ -25,48 +27,51 @@ class VaccinationAppoinment:
         justnow = datetime.utcnow()
         self.__issued_at = datetime.timestamp(justnow)
         if days == 0:
-            self.__appoinment_date = 0
+            self.__appointment_date = 0
         else:
             # timestamp is represented in seconds.microseconds
             # age must be expressed in seconds to be added to the timestamp
-            self.__appoinment_date = self.__issued_at + (days * 24 * 60 * 60)
+            self.__appointment_date = self.__issued_at + (days * 24 * 60 * 60)
         self.__date_signature = self.vaccination_signature
 
     def __signature_string(self):
         """Composes the string to be used for generating the key for the date"""
         return "{alg:" + self.__alg +",typ:" + self.__type +",patient_sys_id:" + \
                self.__patient_sys_id + ",issuedate:" + self.__issued_at.__str__() + \
-               ",vaccinationtiondate:" + self.__appoinment_date.__str__() + "}"
+               ",vaccinationtiondate:" + self.__appointment_date.__str__() + "}"
 
     def save_appointment(self):
         """Saves the appointment into a file"""
+        print(self)
         appointments_store = AppointmentsStore()
         appointments_store.add_item(self)
 
     @classmethod
     def get_appointment_from_date_signature(cls, date_signature):
         appointments_store = AppointmentsStore()
-        appointment_record = appointments_store.find_item(date_signature)
+        appointment_record = appointments_store.find_item(DateSignature(date_signature).value)
         if appointment_record is None:
             raise VaccineManagementException("date_signature is not found")
         freezer = freeze_time(datetime.fromtimestamp(
-            appointment_record['_VaccinationAppoinment__issued_at']))
+            appointment_record["_VaccinationAppointment__issued_at"]))
         freezer.start()
-        appointment = cls(appointment_record['_VaccinationAppoinment__patient_system_id'],
-                          appointment_record['_VaccinationAppoinment__phone_number'], 10)
+        appointment = cls(appointment_record["_VaccinationAppointment__patient_sys_id"],
+                          appointment_record["_VaccinationAppointment__phone_number"], 10)
         freezer.stop()
         return appointment
 
     @classmethod
     def create_appointment_from_json_file(cls, json_file):
         appointment_parser = AppointmentJsonParser(json_file)
-        my_appointment = cls(appointment_parser.json_content["PatientSystemID"],
-                             appointment_parser.json_content["ContactPhoneNumber"], 10)
+        my_appointment = cls(
+            appointment_parser.json_content[appointment_parser.PATIENT_SYSTEM_ID_KEY],
+            appointment_parser.json_content[appointment_parser.CONTACT_PHONE_NUMBER_KEY],
+            10)
         return my_appointment
 
     def is_valid_today(self):
         today = datetime.today().date()
-        date_patient = datetime.fromtimestamp(self.appoinment_date).date()
+        date_patient = datetime.fromtimestamp(self.appointment_date).date()
         if date_patient != today:
             raise VaccineManagementException("Today is not the date")
         return True
@@ -119,9 +124,9 @@ class VaccinationAppoinment:
         self.__issued_at = value
 
     @property
-    def appoinment_date(self):
+    def appointment_date(self):
         """Returns the vaccination date"""
-        return self.__appoinment_date
+        return self.__appointment_date
 
     @property
     def date_signature(self):
