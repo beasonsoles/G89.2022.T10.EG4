@@ -1,9 +1,7 @@
 """Module """
 import datetime
-import re
 import json
 from datetime import datetime
-from freezegun import freeze_time
 from uc3m_care.vaccine_patient_register import VaccinePatientRegister
 from uc3m_care.vaccine_management_exception import VaccineManagementException
 from uc3m_care.vaccination_appoinment import VaccinationAppoinment
@@ -28,11 +26,12 @@ class VaccineManager:
                                              registration_type,
                                              phone_number,
                                              age)
-        my_register.register_patient(my_register)
+        my_register.register_patient()
         return my_register.patient_sys_id
 
     def get_vaccine_date(self, input_file):
         """Gets an appointment for a registered patient"""
+        # open the files
         try:
             with open(input_file, "r", encoding="utf-8", newline="") as file:
                 data = json.load(file)
@@ -40,42 +39,18 @@ class VaccineManager:
             raise VaccineManagementException("File is not found") from exception
         except json.JSONDecodeError as exception:
             raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from exception
+        # check the information
         try:
             patient_sys_id = data["PatientSystemID"]
         except KeyError as exception:
             raise VaccineManagementException("Bad label patient_id") from exception
         try:
-            phone = data["ContactPhoneNumber"]
+            patient_phone_number = data["ContactPhoneNumber"]
         except KeyError as exception:
             raise VaccineManagementException("Bad label contact phone") from exception
-        patient_store = JSON_FILES_PATH + "store_patient.json"
-        with open(patient_store, "r", encoding="utf-8", newline="") as file:
-            patients = json.load(file)
-        found = False
-        for patient in patients:
-            if patient["_VaccinePatientRegister__patient_sys_id"] == data.get("PatientSystemID"):
-                if patient["_VaccinePatientRegister__phone_number"] == phone:
-                    found = True
-                    guid = patient["_VaccinePatientRegister__patient_id"]
-                    name = patient["_VaccinePatientRegister__full_name"]
-                    reg_type = patient["_VaccinePatientRegister__registration_type"]
-                    phone = patient["_VaccinePatientRegister__phone_number"]
-                    patient_timestamp = patient["_VaccinePatientRegister__time_stamp"]
-                    age = patient["_VaccinePatientRegister__age"]
-                    # set the date when the patient was registered for checking the md5
-                    freezer = freeze_time(datetime.fromtimestamp(patient_timestamp).date())
-                    freezer.start()
-                    patient = VaccinePatientRegister(guid, name, reg_type, phone, age)
-                    freezer.stop()
-                    if patient.patient_system_id != data["PatientSystemID"]:
-                        raise VaccineManagementException("Patient's data have been manipulated")
-                else:
-                    raise VaccineManagementException("phone number is not valid")
-        if not found:
-            raise VaccineManagementException("patient system id is not valid")
-        my_appointment = VaccinationAppoinment(guid, data["PatientSystemID"], data["ContactPhoneNumber"], 10)
+        my_appointment = VaccinationAppoinment(patient_sys_id, patient_phone_number, 10)
         # save the date in store_date.json
-        my_appointment.save_appointment(my_appointment)
+        my_appointment.save_appointment()
         return my_appointment.date_signature
 
     def vaccine_patient(self, date_signature):
@@ -96,7 +71,6 @@ class VaccineManager:
                 found = True
                 date_time = appointment["_VaccinationAppoinment__appoinment_date"]
                 my_appointment = VaccinationAppoinment(
-                    appointment["_VaccinationAppoinment__patient_id"],
                     appointment["_VaccinationAppoinment__patient_sys_id"],
                     appointment["_VaccinationAppoinment__phone_number"],
                     appointment["_VaccinationAppoinment__appoinment_date"])

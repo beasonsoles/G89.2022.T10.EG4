@@ -5,18 +5,22 @@ import re
 from datetime import datetime
 from uc3m_care.vaccine_management_exception import VaccineManagementException
 from uc3m_care.vaccine_manager_config import JSON_FILES_PATH
+from .data.attribute.attribute_patient_system_id import PatientSystemID
+from .data.attribute.attribute_phone_number import PhoneNumber
+from .vaccine_patient_register import VaccinePatientRegister
 
 
 # pylint: disable=too-many-instance-attributes
 class VaccinationAppoinment:
     """Class representing an appointment  for the vaccination of a patient"""
 
-    def __init__(self, guid, patient_sys_id, patient_phone_number, days):
+    def __init__(self, patient_sys_id, patient_phone_number, days):
         self.__alg = "SHA-256"
         self.__type = "DS"
-        self.__patient_id = guid
-        self.__patient_sys_id = self.validate_system_id(patient_sys_id)
-        self.__phone_number = self.validate_phone_number(patient_phone_number)
+        self.__patient_sys_id = PatientSystemID(patient_sys_id).value
+        patient = VaccinePatientRegister.create_patient_from_patient_system_id(self.__patient_sys_id)
+        self.__patient_id = patient.patient_id
+        self.__phone_number = PhoneNumber(patient_phone_number).value
         justnow = datetime.utcnow()
         self.__issued_at = datetime.timestamp(justnow)
         if days == 0:
@@ -42,24 +46,7 @@ class VaccinationAppoinment:
             raise VaccineManagementException("date_signature format is not valid")
         return signature
 
-    @staticmethod
-    def validate_system_id(system_id):
-        myregex = re.compile(r"[0-9a-fA-F]{32}$")
-        result = myregex.fullmatch(system_id)
-        if not result:
-            raise VaccineManagementException("patient system id is not valid")
-        return system_id
-
-    @staticmethod
-    def validate_phone_number(phone_number):
-        myregex = re.compile(r"^(\+)[0-9]{11}")
-        result = myregex.fullmatch(phone_number)
-        if not result:
-            raise VaccineManagementException("phone number is not valid")
-        return phone_number
-
-    @staticmethod
-    def save_appointment(signature):
+    def save_appointment(self):
         """Saves the appointment into a file"""
         appointment_store = JSON_FILES_PATH + "store_date.json"
         # first read the file
@@ -73,7 +60,7 @@ class VaccinationAppoinment:
             raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from exception
 
         # append the date
-        appointments.append(signature.__dict__)
+        appointments.append(self.__dict__)
 
         try:
             with open(appointment_store, "w", encoding="utf-8", newline="") as file:
@@ -106,7 +93,7 @@ class VaccinationAppoinment:
 
     @phone_number.setter
     def phone_number(self, value):
-        self.__phone_number = value
+        self.__phone_number = PhoneNumber(value).value
 
     @property
     def vaccination_signature(self):
