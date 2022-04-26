@@ -1,13 +1,15 @@
 """Contains the class Vaccination Appointment"""
 import hashlib
 import json
-import re
 from datetime import datetime
+from freezegun import freeze_time
+from uc3m_care.vaccination_log import VaccinationLog
 from uc3m_care.vaccine_management_exception import VaccineManagementException
 from uc3m_care.vaccine_manager_config import JSON_FILES_PATH
-from .data.attribute.attribute_patient_system_id import PatientSystemID
-from .data.attribute.attribute_phone_number import PhoneNumber
-from .vaccine_patient_register import VaccinePatientRegister
+from uc3m_care.vaccine_patient_register import VaccinePatientRegister
+from uc3m_care.data.attribute.attribute_patient_system_id import PatientSystemID
+from uc3m_care.data.attribute.attribute_phone_number import PhoneNumber
+from uc3m_care.storage.appointments_store import AppointmentsStore
 
 
 # pylint: disable=too-many-instance-attributes
@@ -48,25 +50,34 @@ class VaccinationAppoinment:
 
     def save_appointment(self):
         """Saves the appointment into a file"""
-        appointment_store = JSON_FILES_PATH + "store_date.json"
-        # first read the file
-        try:
-            with open(appointment_store, "r", encoding="utf-8", newline="") as file:
-                appointments = json.load(file)
-        except FileNotFoundError:
-            # file is not found , so  init my data_list
-            appointments = []
-        except json.JSONDecodeError as exception:
-            raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from exception
+        appointments_store = AppointmentsStore()
+        appointments_store.add_item(self)
 
-        # append the date
-        appointments.append(self.__dict__)
+    @classmethod
+    def get_appointment_from_date_signature(cls, date_signature):
+        appointments_store = AppointmentsStore()
+        appointment_record = appointments_store.find_item(date_signature)
+        if appointment_record is None:
+            raise VaccineManagementException("date_signature is not found")
+        freezer = freeze_time(datetime.fromtimestamp(appointment_record['_VaccinationAppoinment__issued_at']))
+        freezer.start()
+        appointment = cls(appointment_record['_VaccinationAppoinment__patient_system_id'],
+                          appointment_record['_VaccinationAppoinment__phone_number'], 10)
+        freezer.stop()
+        return appointment
 
-        try:
-            with open(appointment_store, "w", encoding="utf-8", newline="") as file:
-                json.dump(appointments, file, indent=2)
-        except FileNotFoundError as exception:
-            raise VaccineManagementException("Wrong file or file path") from exception
+    def is_valid_today(self):
+        today = datetime.today().date()
+        date_patient = datetime.fromtimestamp(self.appoinment_date).date()
+        if date_patient != today:
+            raise VaccineManagementException("Today is not the date")
+        return True
+
+    def register_vaccination(self):
+        if self.is_valid_today():
+            vaccination_entry = VaccinationLog(self.date_signature)
+            vaccination_entry.save_log_entry()
+        return True
 
     @property
     def patient_id(self):
