@@ -2,9 +2,9 @@
 import hashlib
 from datetime import datetime
 from freezegun import freeze_time
-from uc3m_care.vaccination_log import VaccinationLog
+from uc3m_care.data.vaccination_log import VaccinationLog
 from uc3m_care.vaccine_management_exception import VaccineManagementException
-from uc3m_care.vaccine_patient_register import VaccinePatientRegister
+from uc3m_care.data.vaccine_patient_register import VaccinePatientRegister
 from uc3m_care.data.attribute.attribute_patient_system_id import PatientSystemID
 from uc3m_care.data.attribute.attribute_phone_number import PhoneNumber
 from uc3m_care.storage.appointments_store import AppointmentsStore

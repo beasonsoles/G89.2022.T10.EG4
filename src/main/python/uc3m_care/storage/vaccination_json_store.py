@@ -8,7 +8,7 @@ class VaccinationJsonStore(JsonStore):
     _ID_FIELD = "_VaccinationLog__date_signature"
 
     def add_item(self, item):
-        from uc3m_care.vaccination_log import VaccinationLog
+        from uc3m_care.data.vaccination_log import VaccinationLog
         if not isinstance(item, VaccinationLog):
             raise VaccineManagementException("Invalid VaccinationLog object")
         super().add_item(item)

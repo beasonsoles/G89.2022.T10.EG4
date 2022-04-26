@@ -5,12 +5,12 @@ from datetime import datetime
 from freezegun import freeze_time
 from uc3m_care.vaccine_management_exception import VaccineManagementException
 from uc3m_care.vaccine_manager_config import JSON_FILES_PATH
-from .data.attribute.attribute_age import Age
-from .data.attribute.attribute_full_name import FullName
-from .data.attribute.attribute_patient_id import PatientID
-from .data.attribute.attribute_phone_number import PhoneNumber
-from .data.attribute.attribute_registration_type import RegistrationType
-from .storage.patients_json_store import PatientJsonStore
+from uc3m_care.data.attribute.attribute_age import Age
+from uc3m_care.data.attribute.attribute_full_name import FullName
+from uc3m_care.data.attribute.attribute_patient_id import PatientID
+from uc3m_care.data.attribute.attribute_phone_number import PhoneNumber
+from uc3m_care.data.attribute.attribute_registration_type import RegistrationType
+from uc3m_care.storage.patients_json_store import PatientJsonStore
 
 
 class VaccinePatientRegister:

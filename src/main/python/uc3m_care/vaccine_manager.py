@@ -1,6 +1,6 @@
 """Module """
-from uc3m_care.vaccine_patient_register import VaccinePatientRegister
-from uc3m_care.vaccination_appoinment import VaccinationAppoinment
+from uc3m_care.data.vaccine_patient_register import VaccinePatientRegister
+from uc3m_care.data.vaccination_appoinment import VaccinationAppoinment
 
 
 class VaccineManager:

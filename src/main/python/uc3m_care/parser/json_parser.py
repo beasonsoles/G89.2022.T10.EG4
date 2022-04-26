@@ -2,7 +2,7 @@ import json
 from uc3m_care.vaccine_management_exception import VaccineManagementException
 
 
-class JsonParser():
+class JsonParser:
     _JSON_KEYS = []
     _ERROR_MESSAGES = []
 
