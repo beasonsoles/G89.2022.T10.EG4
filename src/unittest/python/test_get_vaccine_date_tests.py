@@ -80,7 +80,6 @@ class TestGetVaccineDate(TestCase):
     @freeze_time("2022-03-08")
     def test_get_vaccine_date_no_ok_parameter(self):
         """tests no ok"""
-        appointment_store = JSON_FILES_PATH + "store_date.json"
         my_manager = VaccineManager()
         # first, prepare my test, remove store patient
         patient_store = JSON_FILES_PATH + "store_patient.json"

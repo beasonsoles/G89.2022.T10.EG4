@@ -22,8 +22,8 @@ class TestVaccinePatient(TestCase):
         file_test = JSON_FILES_RF2_PATH + "test_ok.json"
         if os.path.isfile(patient_store):
             os.remove(patient_store)
-        if os.path.isfile(appointment_store):
-            os.remove(appointment_store)
+        #if os.path.isfile(appointment_store):
+        #    os.remove(appointment_store)
 
         # add patient and date in the store
         my_manager = VaccineManager()

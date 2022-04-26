@@ -33,7 +33,7 @@ class VaccinePatientRegister:
         patient_found = patient_store.find_item(patient_system_id)
         if patient_found is None:
             raise VaccineManagementException("patient_system_id not found")
-        guid = patient_found["_VaccinepatientRegister__patient_id"]
+        guid = patient_found["_VaccinePatientRegister__patient_id"]
         name = patient_found["_VaccinePatientRegister__full_name"]
         reg_type = patient_found["_VaccinePatientRegister__registration_type"]
         phone = patient_found["_VaccinePatientRegister__phone_number"]
