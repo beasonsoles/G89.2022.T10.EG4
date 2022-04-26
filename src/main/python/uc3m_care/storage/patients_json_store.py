@@ -1,6 +1,6 @@
-from .json_store import JsonStore
 from uc3m_care.vaccine_manager_config import JSON_FILES_PATH
 from uc3m_care.vaccine_management_exception import VaccineManagementException
+from .json_store import JsonStore
 
 
 class PatientJsonStore(JsonStore):

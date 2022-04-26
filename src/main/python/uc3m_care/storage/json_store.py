@@ -15,7 +15,7 @@ class JsonStore:
                 data_list = json.load(file)
         except json.JSONDecodeError as exception:
             raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from exception
-        except FileNotFoundError as exception:
+        except FileNotFoundError:
             data_list = []
         return data_list
 
