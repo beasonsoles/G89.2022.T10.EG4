@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_vaccine_patient_tests.TestVaccinePatient-20220426212142" tests="6" file="test_vaccine_patient_tests.py" time="0.078" timestamp="2022-04-26T21:21:43" failures="1" errors="0" skipped="0">
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_bad_date_signature" time="0.012" timestamp="2022-04-26T21:21:43"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_date" time="0.011" timestamp="2022-04-26T21:21:43"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_not_found_date_signature" time="0.012" timestamp="2022-04-26T21:21:43"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_ok" time="0.013" timestamp="2022-04-26T21:21:43"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_store_date_is_empty" time="0.012" timestamp="2022-04-26T21:21:43"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_store_date" time="0.018" timestamp="2022-04-26T21:21:43">
+		<failure type="AssertionError" message="'date_signature is not found' != 'Store_date not found'
+- date_signature is not found
++ Store_date not found
+"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 591, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 549, in _callTestMethod
+    method()
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\site-packages\freezegun\api.py", line 789, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\users\beaso\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_vaccine_patient_tests.py", line 146, in test_vaccine_patient_no_store_date
+    self.assertEqual(context_manager.exception.message, "Store_date not found")
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 845, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 1226, in assertMultiLineEqual
+    self.fail(self._formatMessage(msg, standardMsg))
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 675, in fail
+    raise self.failureException(msg)
+AssertionError: 'date_signature is not found' != 'Store_date not found'
+- date_signature is not found
++ Store_date not found
+
+]]></failure>
+	</testcase>
+</testsuite>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_singleton_pattern_tests.SingletonTestCases-20220426212142" tests="4" file="test_singleton_pattern_tests.py" time="0.023" timestamp="2022-04-26T21:21:43" failures="3" errors="0" skipped="0">
+	<testcase classname="test_singleton_pattern_tests.SingletonTestCases" name="test_vaccine_manager_singleton" time="0.001" timestamp="2022-04-26T21:21:43"/>
+	<testcase classname="test_singleton_pattern_tests.SingletonTestCases" name="test_appointments_store_singleton" time="0.016" timestamp="2022-04-26T21:21:43">
+		<failure type="AssertionError" message="&lt;uc3m[17 chars]ointments_store.AppointmentsStore object at 0x00000253E16AB460&gt; != &lt;uc3m[17 chars]ointments_store.AppointmentsStore object at 0x00000253E16AB550&gt;"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 591, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 549, in _callTestMethod
+    method()
+  File "c:\users\beaso\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_singleton_pattern_tests.py", line 23, in test_appointments_store_singleton
+    self.assertEqual(as1, as2)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 845, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 838, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: <uc3m[17 chars]ointments_store.AppointmentsStore object at 0x00000253E16AB460> != <uc3m[17 chars]ointments_store.AppointmentsStore object at 0x00000253E16AB550>
+]]></failure>
+	</testcase>
+	<testcase classname="test_singleton_pattern_tests.SingletonTestCases" name="test_patients_json_store_singleton" time="0.003" timestamp="2022-04-26T21:21:43">
+		<failure type="AssertionError" message="&lt;uc3m[17 chars]ients_json_store.PatientJsonStore object at 0x00000253E16AAB60&gt; != &lt;uc3m[17 chars]ients_json_store.PatientJsonStore object at 0x00000253E16AB460&gt;"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 591, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 549, in _callTestMethod
+    method()
+  File "c:\users\beaso\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_singleton_pattern_tests.py", line 32, in test_patients_json_store_singleton
+    self.assertEqual(ps1, ps2)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 845, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 838, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: <uc3m[17 chars]ients_json_store.PatientJsonStore object at 0x00000253E16AAB60> != <uc3m[17 chars]ients_json_store.PatientJsonStore object at 0x00000253E16AB460>
+]]></failure>
+	</testcase>
+	<testcase classname="test_singleton_pattern_tests.SingletonTestCases" name="test_vaccination_json_store_singleton" time="0.003" timestamp="2022-04-26T21:21:43">
+		<failure type="AssertionError" message="&lt;uc3m[24 chars]n_json_store.VaccinationJsonStore object at 0x00000253E16AB9A0&gt; != &lt;uc3m[24 chars]n_json_store.VaccinationJsonStore object at 0x00000253E16AAB60&gt;"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 591, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 549, in _callTestMethod
+    method()
+  File "c:\users\beaso\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_singleton_pattern_tests.py", line 41, in test_vaccination_json_store_singleton
+    self.assertEqual(vs1, vs2)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 845, in assertEqual
+    assertion_func(first, second, msg=msg)
+  File "C:\Users\beaso\AppData\Local\Programs\Python\Python310\lib\unittest\case.py", line 838, in _baseAssertEqual
+    raise self.failureException(msg)
+AssertionError: <uc3m[24 chars]n_json_store.VaccinationJsonStore object at 0x00000253E16AB9A0> != <uc3m[24 chars]n_json_store.VaccinationJsonStore object at 0x00000253E16AAB60>
+]]></failure>
+	</testcase>
+</testsuite>
