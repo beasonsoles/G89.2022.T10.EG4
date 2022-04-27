@@ -42,7 +42,6 @@ class VaccinationAppointment:
 
     def save_appointment(self):
         """Saves the appointment into a file"""
-        print(self)
         appointments_store = AppointmentsStore()
         appointments_store.add_item(self)
 
