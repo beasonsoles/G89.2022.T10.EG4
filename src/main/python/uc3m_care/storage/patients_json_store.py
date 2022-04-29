@@ -7,22 +7,20 @@ class PatientJsonStore(JsonStore):
     class __PatientJsonStore(JsonStore):
         _FILE_PATH = JSON_FILES_PATH + "store_patient.json"
         _ID_FIELD = "_VaccinePatientRegister__patient_sys_id"
-        INVALID_PATIENT_OBJECT_ERROR = "Invalid patient object"
         PATIENT_REGISTERED_ERROR = "patient_id is registered in store_patient"
+        INVALID_PATIENT_OBJECT_ERROR = "Invalid patient object"
 
         def add_item(self, item):
             from uc3m_care.data.vaccine_patient_register import VaccinePatientRegister
             if not isinstance(item, VaccinePatientRegister):
-                raise VaccineManagementException(self.INVALID_PATIENT_OBJECT_ERROR)
-            patient_records = PatientJsonStore.find_item_list(item.patient_id,
-                                                              "_VaccinePatientRegister__patient_id")
-            for patient_record in patient_records:
-                if (patient_record["_VaccinePatientRegister__registration_type"] ==
-                    item.vaccine_type) and \
-                        (patient_record["_VaccinePatientRegister__full_name"] ==
-                         item.full_name):
-                    raise VaccineManagementException(self.PATIENT_REGISTERED_ERROR)
-            super().add_item(item)
+                patient_records = PatientJsonStore.find_item_list(item.patient_id, self.PATIENT_ID)
+                for patient_record in patient_records:
+                    if (patient_record[self.REGISTRATION_TYPE] ==
+                        item.vaccine_type) and \
+                            (patient_record[self.FULL_NAME] ==
+                             item.full_name):
+                        raise VaccineManagementException(self.PATIENT_REGISTERED_ERROR)
+                super().add_item(item)
 
     instance = None
 

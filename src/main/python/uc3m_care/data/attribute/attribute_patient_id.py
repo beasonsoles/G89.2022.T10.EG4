@@ -12,7 +12,7 @@ class PatientID(Attribute):
 
     def _validate(self, attr_value):
         try:
-            patient_uuid = uuid.UUID(attr_value)
+            uuid.UUID(attr_value)
         except ValueError as val_er:
             raise VaccineManagementException("Id received is not a UUID") from val_er
         return super()._validate(attr_value)

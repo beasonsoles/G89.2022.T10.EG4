@@ -52,10 +52,10 @@ class VaccinationAppointment:
         if appointment_record is None:
             raise VaccineManagementException("date_signature is not found")
         freezer = freeze_time(datetime.fromtimestamp(
-            appointment_record["_VaccinationAppointment__issued_at"]))
+            appointment_record[AppointmentsStore.ISSUED_DATE]))
         freezer.start()
-        appointment = cls(appointment_record["_VaccinationAppointment__patient_sys_id"],
-                          appointment_record["_VaccinationAppointment__phone_number"], 10)
+        appointment = cls(appointment_record[AppointmentsStore.PATIENT_SYSTEM_ID],
+                          appointment_record[AppointmentsStore.APPOINTMENT_PHONE_NUMBER], 10)
         freezer.stop()
         return appointment
 

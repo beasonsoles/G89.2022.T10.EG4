@@ -5,6 +5,17 @@ from uc3m_care.exception.vaccine_management_exception import VaccineManagementEx
 class JsonStore:
     _FILE_PATH = ""
     _ID_FIELD = ""
+    PATIENT_ID = "_VaccinePatientRegister__patient_id"
+    REGISTRATION_TYPE = "_VaccinePatientRegister__registration_type"
+    FULL_NAME = "_VaccinePatientRegister__full_name"
+    REGISTER_PHONE_NUMBER = "_VaccinePatientRegister__phone_number"
+    AGE = "_VaccinePatientRegister__age"
+    TIME_STAMP = "_VaccinePatientRegister__time_stamp"
+    PATIENT_SYSTEM_ID = "_VaccinationAppointment__patient_sys_id"
+    APPOINTMENT_PHONE_NUMBER = "_VaccinationAppointment__phone_number"
+    ISSUED_DATE = "_VaccinationAppointment__issued_at"
+    ERROR_JSON_FORMAT = "JSON Decode Error - Wrong JSON Format"
+    ERROR_FILE_NOT_FOUND = "Wrong file or file path"
 
     def __init__(self):
         pass
@@ -14,7 +25,7 @@ class JsonStore:
             with open(self._FILE_PATH, "r", encoding="utf-8", newline="") as file:
                 data_list = json.load(file)
         except json.JSONDecodeError as exception:
-            raise VaccineManagementException("JSON Decode Error - Wrong JSON Format") from exception
+            raise VaccineManagementException(self.ERROR_JSON_FORMAT) from exception
         except FileNotFoundError:
             data_list = []
         return data_list
@@ -24,7 +35,7 @@ class JsonStore:
             with open(self._FILE_PATH, "w", encoding="utf-8", newline="") as file:
                 json.dump(data_list, file, indent=2)
         except FileNotFoundError as exception:
-            raise VaccineManagementException("Wrong file or file path") from exception
+            raise VaccineManagementException(self.ERROR_FILE_NOT_FOUND) from exception
 
     def add_item(self, item):
         data_list = self.load()
