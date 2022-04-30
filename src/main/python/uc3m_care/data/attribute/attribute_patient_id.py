@@ -1,7 +1,7 @@
 """Module for the attribute PatientID"""
 import uuid
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
-from .Attribute import Attribute
+from .attribute import Attribute
 
 
 class PatientID(Attribute):

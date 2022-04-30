@@ -1,5 +1,5 @@
 """Module for the attribute RegistrationType"""
-from .Attribute import Attribute
+from .attribute import Attribute
 
 
 class RegistrationType(Attribute):
