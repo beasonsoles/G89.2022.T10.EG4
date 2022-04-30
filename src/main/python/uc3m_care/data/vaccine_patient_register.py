@@ -4,12 +4,11 @@ import json
 from datetime import datetime
 from freezegun import freeze_time
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
-from uc3m_care.cfg.vaccine_manager_config import JSON_FILES_PATH
-from uc3m_care.data.attribute.attribute_age import Age
-from uc3m_care.data.attribute.attribute_full_name import FullName
-from uc3m_care.data.attribute.attribute_patient_id import PatientID
-from uc3m_care.data.attribute.attribute_phone_number import PhoneNumber
-from uc3m_care.data.attribute.attribute_registration_type import RegistrationType
+from uc3m_care.data.attribute.AttributeAge import Age
+from uc3m_care.data.attribute.AttributeFullName import FullName
+from uc3m_care.data.attribute.AttributePatientId import PatientID
+from uc3m_care.data.attribute.AttributePhoneNumber import PhoneNumber
+from uc3m_care.data.attribute.AttributeRegistrationType import RegistrationType
 from uc3m_care.storage.patients_json_store import PatientJsonStore
 
 
@@ -32,7 +31,7 @@ class VaccinePatientRegister:
         patient_store = PatientJsonStore()
         patient_found = patient_store.find_item(patient_system_id)
         if patient_found is None:
-            raise VaccineManagementException("patient_system_id not found")
+            raise VaccineManagementException(patient_store.PATIENT_SYS_ID_ERROR)
         guid = patient_found[PatientJsonStore.PATIENT_ID]
         name = patient_found[PatientJsonStore.FULL_NAME]
         reg_type = patient_found[PatientJsonStore.REGISTRATION_TYPE]
@@ -45,7 +44,7 @@ class VaccinePatientRegister:
         patient = cls(guid, name, reg_type, phone, age)
         freezer.stop()
         if patient.patient_system_id != patient_system_id:
-            raise VaccineManagementException("Patient's data have been manipulated")
+            raise VaccineManagementException(patient_store.MANIPULATED_DATA_ERROR)
         return patient
 
     def __str__(self):
@@ -54,12 +53,7 @@ class VaccinePatientRegister:
     def register_patient(self):
         """Method for saving the patients store"""
         patient_store = PatientJsonStore()
-        path = JSON_FILES_PATH + "store_patient.json"
-        # first read the file
-        if patient_store.find_item(self.__patient_sys_id) is None:
-            patient_store.add_item(self)
-        else:
-            raise VaccineManagementException("patient_id is registered in store_patient")
+        patient_store.add_item(self)
         return True
 
     @property

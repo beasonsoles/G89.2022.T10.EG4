@@ -1,5 +1,5 @@
 """Module for the attribute FullName"""
-from .attribute import Attribute
+from .Attribute import Attribute
 
 class FullName(Attribute):
     """Attribute class for FullName"""

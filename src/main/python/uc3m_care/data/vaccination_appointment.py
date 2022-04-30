@@ -2,17 +2,19 @@
 import hashlib
 from datetime import datetime
 from freezegun import freeze_time
-from uc3m_care.data.attribute.attribute_date_signature import DateSignature
+from uc3m_care.data.attribute.AttributeDateSignature import DateSignature
 from uc3m_care.data.vaccination_log import VaccinationLog
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
 from uc3m_care.data.vaccine_patient_register import VaccinePatientRegister
-from uc3m_care.data.attribute.attribute_patient_system_id import PatientSystemID
-from uc3m_care.data.attribute.attribute_phone_number import PhoneNumber
+from uc3m_care.data.attribute.AttributePatientSystemId import PatientSystemID
+from uc3m_care.data.attribute.AttributePhoneNumber import PhoneNumber
 from uc3m_care.storage.appointments_store import AppointmentsStore
 from uc3m_care.parser.appointment_json_parser import AppointmentJsonParser
 
 
 # pylint: disable=too-many-instance-attributes
+
+
 class VaccinationAppointment:
     """Class representing an appointment  for the vaccination of a patient"""
 
@@ -33,6 +35,8 @@ class VaccinationAppointment:
             # age must be expressed in seconds to be added to the timestamp
             self.__appointment_date = self.__issued_at + (days * 24 * 60 * 60)
         self.__date_signature = self.vaccination_signature
+        self.NOT_TODAY_ERROR = "Today is not the date"
+
 
     def __signature_string(self):
         """Composes the string to be used for generating the key for the date"""
@@ -50,7 +54,7 @@ class VaccinationAppointment:
         appointments_store = AppointmentsStore()
         appointment_record = appointments_store.find_item(DateSignature(date_signature).value)
         if appointment_record is None:
-            raise VaccineManagementException("date_signature is not found")
+            raise VaccineManagementException(appointments_store.DATE_SIGNATURE_ERROR)
         freezer = freeze_time(datetime.fromtimestamp(
             appointment_record[AppointmentsStore.ISSUED_DATE]))
         freezer.start()
@@ -72,7 +76,7 @@ class VaccinationAppointment:
         today = datetime.today().date()
         date_patient = datetime.fromtimestamp(self.appointment_date).date()
         if date_patient != today:
-            raise VaccineManagementException("Today is not the date")
+            raise VaccineManagementException(self.NOT_TODAY_ERROR)
         return True
 
     def register_vaccination(self):

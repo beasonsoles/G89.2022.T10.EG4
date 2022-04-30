@@ -1,6 +1,6 @@
 """Module for the attribute Age"""
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
-from .attribute import Attribute
+from .Attribute import Attribute
 
 class Age(Attribute):
     """Attribute class for Age"""

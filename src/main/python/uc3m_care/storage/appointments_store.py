@@ -1,4 +1,4 @@
-from uc3m_care.cfg.vaccine_manager_config import JSON_FILES_PATH
+from uc3m_care.cfg.VaccineManagerConfig import JSON_FILES_PATH
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
 from uc3m_care.storage.json_store import JsonStore
 
@@ -7,12 +7,13 @@ class AppointmentsStore(JsonStore):
     class __AppointmentsStore(JsonStore):
         _FILE_PATH = JSON_FILES_PATH + "store_date.json"
         _ID_FIELD = "_VaccinationAppointment__date_signature"
-        ERROR_INVALID_APPOINTMENT_OBJECT = "Invalid appointment object"
+        INVALID_APPOINTMENT_OBJECT_ERROR = "Invalid appointment object"
+        DATE_SIGNATURE_ERROR = "date_signature is not found"
 
         def add_item(self, item):
             from uc3m_care.data.vaccination_appointment import VaccinationAppointment
             if not isinstance(item, VaccinationAppointment):
-                raise VaccineManagementException(self.ERROR_INVALID_APPOINTMENT_OBJECT)
+                raise VaccineManagementException(self.INVALID_APPOINTMENT_OBJECT_ERROR)
             super().add_item(item)
 
     instance = None

@@ -1,5 +1,5 @@
 """Module for the attribute PhoneNumber"""
-from .attribute import Attribute
+from .Attribute import Attribute
 
 
 class PhoneNumber(Attribute):

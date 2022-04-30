@@ -1,4 +1,4 @@
-from uc3m_care.cfg.vaccine_manager_config import JSON_FILES_PATH
+from uc3m_care.cfg.VaccineManagerConfig import JSON_FILES_PATH
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
 from uc3m_care.storage.json_store import JsonStore
 
@@ -7,11 +7,12 @@ class VaccinationJsonStore(JsonStore):
     class __VaccinationJsonStore(JsonStore):
         _FILE_PATH = JSON_FILES_PATH + "store_vaccine.json"
         _ID_FIELD = "_VaccinationLog__date_signature"
+        INVALID_VACCINELOG_OBJECT_ERROR = "Invalid VaccinationLog object"
 
         def add_item(self, item):
             from uc3m_care.data.vaccination_log import VaccinationLog
             if not isinstance(item, VaccinationLog):
-                raise VaccineManagementException("Invalid VaccinationLog object")
+                raise VaccineManagementException(self.INVALID_VACCINELOG_OBJECT_ERROR)
             super().add_item(item)
 
     instance = None

@@ -1,5 +1,5 @@
 """Module for the attribute PatientSystemID"""
-from .attribute import Attribute
+from .Attribute import Attribute
 
 
 class PatientSystemID(Attribute):
