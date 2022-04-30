@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_vaccine_patient_tests.TestVaccinePatient-20220427171833" tests="6" file="test_vaccine_patient_tests.py" time="0.067" timestamp="2022-04-27T17:18:34" failures="0" errors="0" skipped="0">
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_bad_date_signature" time="0.006" timestamp="2022-04-27T17:18:34"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_date" time="0.007" timestamp="2022-04-27T17:18:34"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_store_date" time="0.016" timestamp="2022-04-27T17:18:34"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_not_found_date_signature" time="0.017" timestamp="2022-04-27T17:18:34"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_ok" time="0.015" timestamp="2022-04-27T17:18:34"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_store_date_is_empty" time="0.007" timestamp="2022-04-27T17:18:34"/>
+</testsuite>

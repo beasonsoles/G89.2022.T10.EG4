@@ -15,6 +15,7 @@ from uc3m_care.storage.patients_json_store import PatientJsonStore
 class VaccinePatientRegister:
     """Class representing the register of the patient in the system"""
     def __init__(self, patient_id, full_name, registration_type, phone_number, age):
+        # we are using the Attribute classes to check their validity
         self.__patient_id = PatientID(patient_id).value
         self.__full_name = FullName(full_name).value
         self.__registration_type = RegistrationType(registration_type).value
@@ -28,10 +29,12 @@ class VaccinePatientRegister:
     @classmethod
     def create_patient_from_patient_system_id(cls, patient_system_id):
         """Generates a patient class if it coincides with the given patient system id"""
+        # check if the patient exists in the storage json file
         patient_store = PatientJsonStore()
         patient_found = patient_store.find_item(patient_system_id)
         if patient_found is None:
             raise VaccineManagementException(patient_store.PATIENT_SYS_ID_ERROR)
+        # if the patient exists, create a 'cls' instance with its data
         guid = patient_found[PatientJsonStore.PATIENT_ID]
         name = patient_found[PatientJsonStore.FULL_NAME]
         reg_type = patient_found[PatientJsonStore.REGISTRATION_TYPE]

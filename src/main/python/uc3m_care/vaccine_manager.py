@@ -22,6 +22,7 @@ class VaccineManager:
                                                  registration_type,
                                                  phone_number,
                                                  age)
+            # save the patient in store_patient.json
             my_register.register_patient()
             return my_register.patient_sys_id
 
@@ -36,6 +37,8 @@ class VaccineManager:
         @staticmethod
         def vaccine_patient(date_signature):
             """Register the vaccination of the patient"""
+            # check if the appointment is correct
+            # if so, save it into store_vaccine.json
             appointment = VaccinationAppointment.get_appointment_from_date_signature(date_signature)
             return appointment.register_vaccination()
 

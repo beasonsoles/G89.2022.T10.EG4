@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_vaccine_patient_tests.TestVaccinePatient-20220427182141" tests="6" file="test_vaccine_patient_tests.py" time="0.109" timestamp="2022-04-27T18:21:42" failures="0" errors="0" skipped="1">
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_bad_date_signature" time="0.016" timestamp="2022-04-27T18:21:42"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_date" time="0.016" timestamp="2022-04-27T18:21:42"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_not_found_date_signature" time="0.016" timestamp="2022-04-27T18:21:42"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_ok" time="0.032" timestamp="2022-04-27T18:21:42"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_store_date_is_empty" time="0.029" timestamp="2022-04-27T18:21:42"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_store_date" time="0.000" timestamp="2022-04-27T18:21:42">
+		<skipped type="skip" message="No longer necessary"/>
+	</testcase>
+</testsuite>

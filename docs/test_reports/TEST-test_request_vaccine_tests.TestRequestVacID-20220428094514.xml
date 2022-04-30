@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_request_vaccine_tests.TestRequestVacID-20220428094514" tests="10" file="test_request_vaccine_tests.py" time="0.090" timestamp="2022-04-28T09:45:14" failures="0" errors="5" skipped="0">
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test_parametrized_not_valid_request_vaccination" time="0.042" timestamp="2022-04-28T09:45:14"/>
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test_request_registration_type_nok" time="0.001" timestamp="2022-04-28T09:45:14"/>
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test_request_vaccination_id_nok_uuid" time="0.001" timestamp="2022-04-28T09:45:14"/>
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test_request_vaccination_id_nok_uuid_2" time="0.001" timestamp="2022-04-28T09:45:14"/>
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test_request_vaccination_id_ok" time="0.005" timestamp="2022-04-28T09:45:14"/>
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test__add_family_valid_request_vaccination" time="0.010" timestamp="2022-04-28T09:45:14">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 592, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 550, in _callTestMethod
+    method()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\venv\lib\site-packages\freezegun\api.py", line 789, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_request_vaccine_tests.py", line 184, in test__add_family_valid_request_vaccination
+    md5 = my_request.request_vaccination_id("a729d963-e0dd-47d0-8bc6-b6c595ad0098",
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 25, in request_vaccination_id
+    my_register.register_patient()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 69, in register_patient
+    if patient[PatientJsonStore.PATIENT_ID] == self.__patient_id and \
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test__duplicate_valid_request_vaccination" time="0.008" timestamp="2022-04-28T09:45:14">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 592, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 550, in _callTestMethod
+    method()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_request_vaccine_tests.py", line 161, in test__duplicate_valid_request_vaccination
+    md5 = my_request.request_vaccination_id("a729d963-e0dd-47d0-8bc6-b6c595ad0098",
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 25, in request_vaccination_id
+    my_register.register_patient()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 69, in register_patient
+    if patient[PatientJsonStore.PATIENT_ID] == self.__patient_id and \
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test_parametrized_valid_request_vaccination (test='test_2')" time="0.000" timestamp="0001-01-01T00:00:00">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 499, in subTest
+    yield
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_request_vaccine_tests.py", line 117, in test_parametrized_valid_request_vaccination
+    md5 = my_request.request_vaccination_id(patient_id, name_surname,
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 25, in request_vaccination_id
+    my_register.register_patient()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 69, in register_patient
+    if patient[PatientJsonStore.PATIENT_ID] == self.__patient_id and \
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test_parametrized_valid_request_vaccination (test='test_3')" time="0.000" timestamp="0001-01-01T00:00:00">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 499, in subTest
+    yield
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_request_vaccine_tests.py", line 117, in test_parametrized_valid_request_vaccination
+    md5 = my_request.request_vaccination_id(patient_id, name_surname,
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 25, in request_vaccination_id
+    my_register.register_patient()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 69, in register_patient
+    if patient[PatientJsonStore.PATIENT_ID] == self.__patient_id and \
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+	<testcase classname="test_request_vaccine_tests.TestRequestVacID" name="test_parametrized_valid_request_vaccination (test='test_4')" time="0.021" timestamp="2022-04-28T09:45:14">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 499, in subTest
+    yield
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_request_vaccine_tests.py", line 117, in test_parametrized_valid_request_vaccination
+    md5 = my_request.request_vaccination_id(patient_id, name_surname,
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 25, in request_vaccination_id
+    my_register.register_patient()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 69, in register_patient
+    if patient[PatientJsonStore.PATIENT_ID] == self.__patient_id and \
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+</testsuite>

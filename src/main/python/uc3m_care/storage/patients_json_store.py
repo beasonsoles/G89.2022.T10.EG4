@@ -20,6 +20,7 @@ class PatientJsonStore(JsonStore):
             if not isinstance(item, VaccinePatientRegister):
                 raise VaccineManagementException(self.INVALID_PATIENT_OBJECT_ERROR)
             patient_records = self.find_item_list(item.patient_id, self.PATIENT_ID)
+            # check if the patient is already registered
             for patient_record in patient_records:
                 if (patient_record[self.REGISTRATION_TYPE] ==
                     item.vaccine_type) and \

@@ -1,7 +1,7 @@
 """Module for the attribute PatientID"""
 import uuid
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
-from .attribute import Attribute
+from uc3m_care.data.attribute.attribute import Attribute
 
 
 class PatientID(Attribute):
@@ -11,6 +11,7 @@ class PatientID(Attribute):
     _validation_error_message = "UUID invalid"
 
     def _validate(self, attr_value):
+        # since the PatientID is a UUID, we will use its own validity method
         try:
             uuid.UUID(attr_value)
         except ValueError as val_er:

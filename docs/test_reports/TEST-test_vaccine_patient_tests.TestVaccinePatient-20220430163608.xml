@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_vaccine_patient_tests.TestVaccinePatient-20220430163608" tests="6" file="test_vaccine_patient_tests.py" time="0.083" timestamp="2022-04-30T16:36:09" failures="0" errors="1" skipped="1">
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_bad_date_signature" time="0.014" timestamp="2022-04-30T16:36:09"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_date" time="0.025" timestamp="2022-04-30T16:36:09"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_not_found_date_signature" time="0.019" timestamp="2022-04-30T16:36:09"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_store_date_is_empty" time="0.009" timestamp="2022-04-30T16:36:09"/>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_ok" time="0.017" timestamp="2022-04-30T16:36:09">
+		<error type="TypeError" message="__init__() takes 1 positional argument but 2 were given"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 592, in run
+    self._callTestMethod(testMethod)
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 550, in _callTestMethod
+    method()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\venv\lib\site-packages\freezegun\api.py", line 789, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_vaccine_patient_tests.py", line 47, in test_vaccine_patient_ok
+    signature = my_manager.vaccine_patient(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 38, in vaccine_patient
+    return appointment.register_vaccination()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 84, in register_vaccination
+    vaccination_entry = VaccinationLog(self.date_signature)
+TypeError: __init__() takes 1 positional argument but 2 were given
+]]></error>
+	</testcase>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_store_date" time="0.000" timestamp="2022-04-30T16:36:09">
+		<skipped type="skip" message="No longer necessary"/>
+	</testcase>
+</testsuite>

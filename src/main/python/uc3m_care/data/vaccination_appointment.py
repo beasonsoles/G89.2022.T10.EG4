@@ -21,6 +21,7 @@ class VaccinationAppointment:
     def __init__(self, patient_sys_id, patient_phone_number, days):
         self.__alg = "SHA-256"
         self.__type = "DS"
+        # we are using the Attribute classes to check their validity
         self.__patient_sys_id = PatientSystemID(patient_sys_id).value
         patient = VaccinePatientRegister.create_patient_from_patient_system_id(
             self.__patient_sys_id)
@@ -52,12 +53,15 @@ class VaccinationAppointment:
     def get_appointment_from_date_signature(cls, date_signature):
         """Assigns an appointment to a patient with the given date signature"""
         appointments_store = AppointmentsStore()
+        # look for an appointment with the same date signature
         appointment_record = appointments_store.find_item(DateSignature(date_signature).value)
         if appointment_record is None:
             raise VaccineManagementException(appointments_store.DATE_SIGNATURE_ERROR)
+        # freeze the time of the issued date
         freezer = freeze_time(datetime.fromtimestamp(
             appointment_record[AppointmentsStore.ISSUED_DATE]))
         freezer.start()
+        # create the appointment once its time is frozen
         appointment = cls(appointment_record[AppointmentsStore.PATIENT_SYSTEM_ID],
                           appointment_record[AppointmentsStore.APPOINTMENT_PHONE_NUMBER], 10)
         freezer.stop()
@@ -77,6 +81,7 @@ class VaccinationAppointment:
         """Checks if the appointment of the patient is today"""
         today = datetime.today().date()
         date_patient = datetime.fromtimestamp(self.appointment_date).date()
+        # we only vaccine the patient if the appointment is in the current day
         if date_patient != today:
             raise VaccineManagementException(self.not_today_error)
         return True

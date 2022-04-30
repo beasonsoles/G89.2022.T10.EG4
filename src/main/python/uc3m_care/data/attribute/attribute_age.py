@@ -8,6 +8,7 @@ class Age(Attribute):
     _validation_error_message = "age is not valid"
 
     def _validate(self, attr_value):
+        # the age does not have a pattern, so we rewrite the validation method
         if attr_value.isnumeric():
             if int(attr_value) < 6 or int(attr_value) > 125:
                 raise VaccineManagementException(self._validation_error_message)

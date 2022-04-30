@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_vaccine_patient_tests.TestVaccinePatient-20220428094441" tests="6" file="test_vaccine_patient_tests.py" time="0.048" timestamp="2022-04-28T09:44:42" failures="0" errors="5" skipped="1">
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_bad_date_signature" time="0.011" timestamp="2022-04-28T09:44:42">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 588, in run
+    self._callSetUp()
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 547, in _callSetUp
+    self.setUp()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\venv\lib\site-packages\freezegun\api.py", line 789, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_vaccine_patient_tests.py", line 34, in setUp
+    my_manager.get_vaccine_date(file_test)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 30, in get_vaccine_date
+    my_appointment = VaccinationAppointment.create_appointment_from_json_file(input_file)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 65, in create_appointment_from_json_file
+    my_appointment = cls(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 23, in __init__
+    patient = VaccinePatientRegister.create_patient_from_patient_system_id(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 36, in create_patient_from_patient_system_id
+    guid = patient_found[PatientJsonStore.PATIENT_ID]
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_date" time="0.009" timestamp="2022-04-28T09:44:42">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 588, in run
+    self._callSetUp()
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 547, in _callSetUp
+    self.setUp()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\venv\lib\site-packages\freezegun\api.py", line 789, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_vaccine_patient_tests.py", line 34, in setUp
+    my_manager.get_vaccine_date(file_test)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 30, in get_vaccine_date
+    my_appointment = VaccinationAppointment.create_appointment_from_json_file(input_file)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 65, in create_appointment_from_json_file
+    my_appointment = cls(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 23, in __init__
+    patient = VaccinePatientRegister.create_patient_from_patient_system_id(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 36, in create_patient_from_patient_system_id
+    guid = patient_found[PatientJsonStore.PATIENT_ID]
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_not_found_date_signature" time="0.008" timestamp="2022-04-28T09:44:42">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 588, in run
+    self._callSetUp()
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 547, in _callSetUp
+    self.setUp()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\venv\lib\site-packages\freezegun\api.py", line 789, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_vaccine_patient_tests.py", line 34, in setUp
+    my_manager.get_vaccine_date(file_test)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 30, in get_vaccine_date
+    my_appointment = VaccinationAppointment.create_appointment_from_json_file(input_file)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 65, in create_appointment_from_json_file
+    my_appointment = cls(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 23, in __init__
+    patient = VaccinePatientRegister.create_patient_from_patient_system_id(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 36, in create_patient_from_patient_system_id
+    guid = patient_found[PatientJsonStore.PATIENT_ID]
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_ok" time="0.010" timestamp="2022-04-28T09:44:42">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 588, in run
+    self._callSetUp()
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 547, in _callSetUp
+    self.setUp()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\venv\lib\site-packages\freezegun\api.py", line 789, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_vaccine_patient_tests.py", line 34, in setUp
+    my_manager.get_vaccine_date(file_test)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 30, in get_vaccine_date
+    my_appointment = VaccinationAppointment.create_appointment_from_json_file(input_file)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 65, in create_appointment_from_json_file
+    my_appointment = cls(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 23, in __init__
+    patient = VaccinePatientRegister.create_patient_from_patient_system_id(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 36, in create_patient_from_patient_system_id
+    guid = patient_found[PatientJsonStore.PATIENT_ID]
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_store_date_is_empty" time="0.009" timestamp="2022-04-28T09:44:42">
+		<error type="AttributeError" message="type object 'PatientJsonStore' has no attribute 'PATIENT_ID'"><![CDATA[Traceback (most recent call last):
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 59, in testPartExecutor
+    yield
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 588, in run
+    self._callSetUp()
+  File "C:\Users\alici\AppData\Local\Programs\Python\Python39\lib\unittest\case.py", line 547, in _callSetUp
+    self.setUp()
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\venv\lib\site-packages\freezegun\api.py", line 789, in wrapper
+    result = func(*args, **kwargs)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\unittest\python\test_vaccine_patient_tests.py", line 34, in setUp
+    my_manager.get_vaccine_date(file_test)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\vaccine_manager.py", line 30, in get_vaccine_date
+    my_appointment = VaccinationAppointment.create_appointment_from_json_file(input_file)
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 65, in create_appointment_from_json_file
+    my_appointment = cls(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccination_appointment.py", line 23, in __init__
+    patient = VaccinePatientRegister.create_patient_from_patient_system_id(
+  File "c:\users\alici\pycharmprojects\g89.2022.t10.eg4\src\main\python\uc3m_care\data\vaccine_patient_register.py", line 36, in create_patient_from_patient_system_id
+    guid = patient_found[PatientJsonStore.PATIENT_ID]
+AttributeError: type object 'PatientJsonStore' has no attribute 'PATIENT_ID'
+]]></error>
+	</testcase>
+	<testcase classname="test_vaccine_patient_tests.TestVaccinePatient" name="test_vaccine_patient_no_store_date" time="0.001" timestamp="2022-04-28T09:44:42">
+		<skipped type="skip" message="No longer necessary"/>
+	</testcase>
+</testsuite>
