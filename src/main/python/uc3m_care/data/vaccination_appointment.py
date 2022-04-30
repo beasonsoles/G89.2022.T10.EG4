@@ -35,8 +35,7 @@ class VaccinationAppointment:
             # age must be expressed in seconds to be added to the timestamp
             self.__appointment_date = self.__issued_at + (days * 24 * 60 * 60)
         self.__date_signature = self.vaccination_signature
-        self.NOT_TODAY_ERROR = "Today is not the date"
-
+        self.not_today_error = "Today is not the date"
 
     def __signature_string(self):
         """Composes the string to be used for generating the key for the date"""
@@ -51,6 +50,7 @@ class VaccinationAppointment:
 
     @classmethod
     def get_appointment_from_date_signature(cls, date_signature):
+        """Assigns an appointment to a patient with the given date signature"""
         appointments_store = AppointmentsStore()
         appointment_record = appointments_store.find_item(DateSignature(date_signature).value)
         if appointment_record is None:
@@ -65,6 +65,7 @@ class VaccinationAppointment:
 
     @classmethod
     def create_appointment_from_json_file(cls, json_file):
+        """Assigns an appointment to a patient contained in the given json file"""
         appointment_parser = AppointmentJsonParser(json_file)
         my_appointment = cls(
             appointment_parser.json_content[appointment_parser.PATIENT_SYSTEM_ID_KEY],
@@ -73,15 +74,17 @@ class VaccinationAppointment:
         return my_appointment
 
     def is_valid_today(self):
+        """Checks if the appointment of the patient is today"""
         today = datetime.today().date()
         date_patient = datetime.fromtimestamp(self.appointment_date).date()
         if date_patient != today:
-            raise VaccineManagementException(self.NOT_TODAY_ERROR)
+            raise VaccineManagementException(self.not_today_error)
         return True
 
     def register_vaccination(self):
+        """Registers the patient as a vaccinated patient"""
         if self.is_valid_today():
-            vaccination_entry = VaccinationLog(self.date_signature)
+            vaccination_entry = VaccinationLog()
             vaccination_entry.save_log_entry()
         return True
 

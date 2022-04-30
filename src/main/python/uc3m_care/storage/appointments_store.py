@@ -1,10 +1,13 @@
+"""Module for the AppointmentsStore object"""
 from uc3m_care.cfg.vaccine_manager_config import JSON_FILES_PATH
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
 from uc3m_care.storage.json_store import JsonStore
 
 
 class AppointmentsStore(JsonStore):
+    """Class for the management of the json file for the appointments"""
     class __AppointmentsStore(JsonStore):
+        """Private Class for applying the Singleton Pattern"""
         _FILE_PATH = JSON_FILES_PATH + "store_date.json"
         _ID_FIELD = "_VaccinationAppointment__date_signature"
         INVALID_APPOINTMENT_OBJECT_ERROR = "Invalid appointment object"

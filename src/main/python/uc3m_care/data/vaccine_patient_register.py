@@ -14,7 +14,6 @@ from uc3m_care.storage.patients_json_store import PatientJsonStore
 
 class VaccinePatientRegister:
     """Class representing the register of the patient in the system"""
-    # pylint: disable = too-many-arguments
     def __init__(self, patient_id, full_name, registration_type, phone_number, age):
         self.__patient_id = PatientID(patient_id).value
         self.__full_name = FullName(full_name).value
@@ -28,6 +27,7 @@ class VaccinePatientRegister:
 
     @classmethod
     def create_patient_from_patient_system_id(cls, patient_system_id):
+        """Generates a patient class if it coincides with the given patient system id"""
         patient_store = PatientJsonStore()
         patient_found = patient_store.find_item(patient_system_id)
         if patient_found is None:

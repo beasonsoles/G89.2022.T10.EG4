@@ -1,8 +1,10 @@
+"""Module for the JsonStore class"""
 import json
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
 
 
 class JsonStore:
+    """Class for managing the json files"""
     _FILE_PATH = ""
     _ID_FIELD = ""
     PATIENT_ID = "_VaccinePatientRegister__patient_id"
@@ -21,6 +23,7 @@ class JsonStore:
         pass
 
     def load(self):
+        """Method that returns the contents of the file"""
         try:
             with open(self._FILE_PATH, "r", encoding="utf-8", newline="") as file:
                 data_list = json.load(file)
@@ -31,6 +34,7 @@ class JsonStore:
         return data_list
 
     def save(self, data_list):
+        """Method that saves data into the file"""
         try:
             with open(self._FILE_PATH, "w", encoding="utf-8", newline="") as file:
                 json.dump(data_list, file, indent=2)
@@ -38,11 +42,13 @@ class JsonStore:
             raise VaccineManagementException(self.ERROR_FILE_NOT_FOUND) from exception
 
     def add_item(self, item):
+        """Method that inserts an item into the data of the file"""
         data_list = self.load()
         data_list.append(item.__dict__)
         self.save(data_list)
 
     def find_item(self, key_value, key=None):
+        """Method that finds an item given the value of one of its keys"""
         data_list = self.load()
         if key is None:
             key = self._ID_FIELD
@@ -52,6 +58,7 @@ class JsonStore:
         return None
 
     def find_item_list(self, key_value, key=None):
+        """Method that returns the items that match the given key"""
         data_list = self.load()
         if key is None:
             key = self._ID_FIELD

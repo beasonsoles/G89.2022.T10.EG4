@@ -1,13 +1,14 @@
-from datetime import datetime
+"""Module for the VaccinationLog class"""
 from uc3m_care.storage.vaccination_json_store import VaccinationJsonStore
 
 
 class VaccinationLog:
+    """Class for the VaccinationLog object"""
 
-    def __init__(self, date_signature):
-        self.__date_signature = date_signature
-        self.__timestamp = datetime.timestamp(datetime.utcnow())
+    def __init__(self):
+        pass
 
     def save_log_entry(self):
+        """The method creates a VaccinationJsonStore and inserts the first item"""
         vaccination_log = VaccinationJsonStore()
         vaccination_log.add_item(self)

@@ -1,10 +1,13 @@
+"""Module for the PatientJsonStore object"""
 from uc3m_care.cfg.vaccine_manager_config import JSON_FILES_PATH
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
-from .json_store import JsonStore
+from uc3m_care.storage.json_store import JsonStore
 
 
 class PatientJsonStore(JsonStore):
+    """Class for the management of the json file for the patients"""
     class __PatientJsonStore(JsonStore):
+        """Private Class for applying the Singleton Pattern"""
         _FILE_PATH = JSON_FILES_PATH + "store_patient.json"
         _ID_FIELD = "_VaccinePatientRegister__patient_sys_id"
         PATIENT_REGISTERED_ERROR = "patient_id is registered in store_patient"

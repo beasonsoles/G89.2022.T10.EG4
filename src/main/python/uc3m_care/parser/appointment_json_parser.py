@@ -1,7 +1,9 @@
-from .json_parser import JsonParser
+"""Module for the AppointmentJsonParser module"""
+from uc3m_care.parser.json_parser import JsonParser
 
 
 class AppointmentJsonParser(JsonParser):
+    """Class containing the attributes for the AppointmentJsonParser object"""
     # magic strings
     PATIENT_SYSTEM_ID_KEY = "PatientSystemID"
     CONTACT_PHONE_NUMBER_KEY = "ContactPhoneNumber"

@@ -1,10 +1,13 @@
+"""Module for the VaccinationJsonStore object"""
 from uc3m_care.cfg.vaccine_manager_config import JSON_FILES_PATH
 from uc3m_care.exception.vaccine_management_exception import VaccineManagementException
 from uc3m_care.storage.json_store import JsonStore
 
 
 class VaccinationJsonStore(JsonStore):
+    """Class for the management of the json file for the vaccinations"""
     class __VaccinationJsonStore(JsonStore):
+        """Private Class for applying the Singleton Pattern"""
         _FILE_PATH = JSON_FILES_PATH + "store_vaccine.json"
         _ID_FIELD = "_VaccinationLog__date_signature"
         INVALID_VACCINELOG_OBJECT_ERROR = "Invalid VaccinationLog object"
